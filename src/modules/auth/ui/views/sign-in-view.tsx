@@ -17,8 +17,10 @@ import { OctagonAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { auth } from "@/lib/auth";
+import { useRouter } from "next/navigation";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
@@ -46,14 +48,15 @@ export const SignInView = () => {
       {
         email: data.email,
         password: data.password,
+        callbackURL: "/"
       },
       {
         onSuccess: () => {
-          setPending(false); // Re-enable buttons on success
+          setPending(false); 
           router.push("/");
         },
         onError: (err) => {
-          setPending(false); // Re-enable buttons on error!
+          setPending(false); 
           const errorMsg =
             typeof err.error === "string"
               ? err.error
@@ -133,11 +136,18 @@ export const SignInView = () => {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button disabled={pending} variant="outline" type="button" className="w-full">
-                    Google
+                  <Button disabled={pending} variant="outline" type="button" className="w-full"
+                  onClick={() => {
+                    authClient.signIn.social({ provider: "google",})
+                    }}>
+                    <FaGoogle/>Google
                   </Button>
-                  <Button disabled={pending} variant="outline" type="button" className="w-full">
-                    Github
+                  <Button disabled={pending} variant="outline" type="button" className="w-full"
+                  onClick={() => {
+                    authClient.signIn.social({ provider: "github",})
+                    }}
+                    >
+                    <FaGithub/>Github
                   </Button>
                 </div>
                 <div className="text-center text-sm">

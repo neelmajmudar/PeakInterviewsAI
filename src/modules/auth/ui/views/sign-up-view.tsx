@@ -19,6 +19,7 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
@@ -58,23 +59,24 @@ export const SignUpView = () => {
         name: data.name,
         email: data.email,
         password: data.password,
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
-          setPending(false); // Re-enable buttons on success
-          router.push("/");
+          setPending(false);
+          router.push("/"); 
         },
         onError: (err) => {
-          setPending(false); // Re-enable buttons on error!
+          setPending(false); 
           const errorMsg =
             typeof err.error === "string"
               ? err.error
               : JSON.stringify(err);
 
-          // You might need to adjust this condition based on the actual error structure from your authClient
-          if (errorMsg.includes("email already exists")) { // Common server-side error for signup
+
+          if (errorMsg.includes("email already exists")) { 
             setError("This email is already registered. Please try logging in.");
-          } else if (errorMsg.includes("password too short")) { // Example: If your authClient returns this specific message
+          } else if (errorMsg.includes("password too short")) { 
             setError("The password provided is too short. It must be at least 8 characters.");
           } else {
             setError("An unexpected error occurred during sign up. Please try again later.");
@@ -177,11 +179,18 @@ export const SignUpView = () => {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button disabled={pending} variant="outline" type="button" className="w-full">
-                    Google
+                  <Button disabled={pending} variant="outline" type="button" className="w-full"
+                  onClick={() => {
+                    authClient.signIn.social({ provider: "google",})
+                    }}>
+                    <FaGoogle/>Google
                   </Button>
-                  <Button disabled={pending} variant="outline" type="button" className="w-full">
-                    Github
+                  <Button
+                    onClick={() => {
+                    authClient.signIn.social({ provider: "github",})
+                    }}
+                     disabled={pending} variant="outline" type="button" className="w-full">
+                    <FaGithub/>Github
                   </Button>
                 </div>
                 <div className="text-center text-sm">
