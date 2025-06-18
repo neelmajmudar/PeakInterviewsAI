@@ -163,7 +163,7 @@ export const SignInView = () => {
             </form>
           </Form>
 
-          <div className="bg-radial from-purple-500 to-purple-800 relative hidden flex-col items-center justify-center gap-y-4 md:flex">
+          <div className="bg-radial from-sidebar-accent to-sidebar relative hidden flex-col items-center justify-center gap-y-4 md:flex">
             <img src="/logo.svg" alt="Image" className="h-[180px] w-[180px]" />
             <p className="text-4xl font-semibold text-white">
               PeakInterviews.AI
