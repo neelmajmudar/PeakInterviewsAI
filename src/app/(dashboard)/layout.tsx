@@ -1,6 +1,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/modules/dashboard/ui/components/dashboard-sidebar";
 import { Sidebar } from "lucide-react";
+import { DashboardNavbar } from "@/modules/dashboard/ui/components/dashboard-navbar";
 
 interface Props {
     children?: React.ReactNode;
@@ -11,6 +12,7 @@ const Layout = ({ children }: Props) => {
         <SidebarProvider>
             <DashboardSidebar/>
             <main className="flex flex-col h-screen w-screen bg-muted">
+                <DashboardNavbar/>
                 {children}
             </main>
         </SidebarProvider>
