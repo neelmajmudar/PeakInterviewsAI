@@ -19,12 +19,12 @@ interface NewMeetingDialogProps{
             open={open}
             onOpenChange={onOpenChange}>
             <MeetingForm 
-                onSuccess={(id) => {
-                    onOpenChange(false);
-                    router.push(`/meetings/${id}`);
-                }}
-                onCancel={() => onOpenChange(false)}
-                />
+            onSuccess={() => {
+            onOpenChange(false);
+            //router.push(`/meetings/${id}`);
+            }}
+            onCancel={() => onOpenChange(false)}
+            />
             </ResponsiveDialog>
         );
     };
