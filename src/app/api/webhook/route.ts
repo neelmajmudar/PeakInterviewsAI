@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
             agentUserId: existingAgent.id,
         });
 
-        realtimeClient.updateSession({
+        await realtimeClient.updateSession({
             instructions: existingAgent.instructions,
         });
     } else if (eventType === "call.session_participant_left") {
