@@ -86,30 +86,6 @@ export const meetingsRouter = createTRPCRouter({
                 userId: ctx.auth.user.id,
             })
             .returning();
-
-
-            //TODO: Create Stream Call, Upsert Stream Users
-            const call = streamVideo.video.call("default", createdMeeting.id);
-            await call.create({
-                data: {
-                    created_by_id: ctx.auth.user.id,
-                    custom: {
-                        meetingId: createdMeeting.id,
-                        meetingName: createdMeeting.name
-                    },
-                    settings_override: {
-                        transcription: {
-                            language: "en",
-                            mode: "auto-on",
-                            closed_caption_mode: "auto-on",
-                        },
-                        recording: {
-                            mode: "auto-on",
-                            quality: "1080p",
-                        },
-                    },
-                },
-            });
             
             const [existingAgent] = await db
             .select()
@@ -135,6 +111,31 @@ export const meetingsRouter = createTRPCRouter({
                 },
             ]);
 
+            const call = streamVideo.video.call("default", createdMeeting.id);
+            await call.create({
+                data: {
+                    created_by_id: ctx.auth.user.id,
+                    custom: {
+                        meetingId: createdMeeting.id,
+                        meetingName: createdMeeting.name,
+                    },
+                    members: [
+                        { user_id: ctx.auth.user.id, role: "admin" },
+                        { user_id: createdMeeting.agentId, role: "user" },
+                    ],
+                    settings_override: {
+                        transcription: {
+                            language: "en",
+                            mode: "auto-on",
+                            closed_caption_mode: "auto-on",
+                        },
+                        recording: {
+                            mode: "auto-on",
+                            quality: "1080p",
+                        },
+                    },
+                },
+            });
             return createdMeeting;
         }),
 
