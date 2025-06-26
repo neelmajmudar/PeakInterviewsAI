@@ -1,3 +1,5 @@
+"use client";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {MeetingGetOne} from "../../types";
 import { useTRPC } from "@/trpc/client";

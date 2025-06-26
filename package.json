@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "dev:webhook": "ngrok http --url=related-intensely-bear.ngrok-free.app 3000"
+    "dev:webhook": "ngrok http 3000 --domain=related-intensely-bear.ngrok-free.app"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.2",
