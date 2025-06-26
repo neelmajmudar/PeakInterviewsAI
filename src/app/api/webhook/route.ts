@@ -19,6 +19,7 @@ function verifySignatureWithSDK(body: string, signature: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
+    console.log("Webhook request received");
     const signature = req.headers.get("x-signature");
     const apiKey = req.headers.get("x-api-key");
 
@@ -66,10 +67,8 @@ export async function POST(req: NextRequest) {
             )
         );
 
-        console.log("Looking for meeting", meetingId);
         // Optionally, log all meetings with that ID to see their status
         const allMeetings = await db.select().from(meetings).where(eq(meetings.id, meetingId));
-        console.log("Meetings found:", allMeetings);
 
         if (!existingMeeting) {
             return NextResponse.json({error: "Meeting not found" }, {status: 404});
@@ -96,7 +95,7 @@ export async function POST(req: NextRequest) {
         const realtimeClient = await streamVideo.video.connectOpenAi({
             call,
             openAiApiKey: process.env.OPENAI_API_KEY!,
-            agentUserId: existingAgent.id, 
+            agentUserId: existingAgent.id,
         });
 
         realtimeClient.updateSession({
@@ -113,7 +112,5 @@ export async function POST(req: NextRequest) {
         const call = streamVideo.video.call("default", meetingId);
         await call.end();
     }
-
     return NextResponse.json({ status: "ok" });
 };
-

@@ -136,7 +136,6 @@ export const meetingsRouter = createTRPCRouter({
                     },
                 },
             });
-
             return createdMeeting;
         }),
 
