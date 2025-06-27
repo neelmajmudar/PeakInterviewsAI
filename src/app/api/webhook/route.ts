@@ -7,7 +7,7 @@ import {
 } from "@stream-io/node-sdk";
 
 import { NextRequest, NextResponse } from "next/server";
-
+const realtimeClients: Record<string, any> = {};
 import { db } from "@/db";
 import { agents, meetings } from "@/db/schema";
 import { streamVideo } from "@/lib/stream-video";
@@ -95,11 +95,13 @@ export async function POST(req: NextRequest) {
 
         const call = streamVideo.video.call("default", meetingId);
         console.debug("Connecting OpenAI agent", { agentId: existingAgent.id });
-        const realtimeClient = await streamVideo.video.connectOpenAi({
-            call,
-            openAiApiKey: process.env.OPENAI_API_KEY!,
-            agentUserId: existingAgent.id,
-        });
+        const realtimeClient =
+            realtimeClients[meetingId] ??
+            (realtimeClients[meetingId] = await streamVideo.video.connectOpenAi({
+                call,
+                openAiApiKey: process.env.OPENAI_API_KEY!,
+                agentUserId: existingAgent.id,
+            }));
 
         await realtimeClient.updateSession({
             instructions: existingAgent.instructions,
@@ -115,6 +117,8 @@ export async function POST(req: NextRequest) {
 
         const call = streamVideo.video.call("default", meetingId);
         await call.end();
+        realtimeClients[meetingId]?.disconnect?.();
+        delete realtimeClients[meetingId];
     } else if (eventType === "call.session_ended") {
         const event = payload as CallEndedEvent;
         const meetingId = event.call.custom?.meetingId;
@@ -131,6 +135,8 @@ export async function POST(req: NextRequest) {
                 endedAt: new Date(),
             })
             .where(and(eq(meetings.id, meetingId), eq(meetings.status, "active")));
+        realtimeClients[meetingId]?.disconnect?.();
+        delete realtimeClients[meetingId];
     } else if (eventType === "call.transcription_ready") {
         const event = payload as CallTranscriptionReadyEvent;
         const meetingId = event.call_cid.split(":")[1];
