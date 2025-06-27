@@ -8,7 +8,7 @@ import {
 from "@stream-io/node-sdk";
 
 import { NextRequest, NextResponse } from "next/server";
-
+const realtimeClients: Record<string, any> = {};
 import { db } from "@/db";
 import { agents, meetings } from "@/db/schema";
 import { streamVideo } from "@/lib/stream-video";
@@ -20,7 +20,6 @@ function verifySignatureWithSDK(body: string, signature: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
-    console.log("Webhook request received");
     const signature = req.headers.get("x-signature");
     const apiKey = req.headers.get("x-api-key");
 
@@ -93,11 +92,14 @@ export async function POST(req: NextRequest) {
         }
 
         const call = streamVideo.video.call("default", meetingId);
-        const realtimeClient = await streamVideo.video.connectOpenAi({
-            call,
-            openAiApiKey: process.env.OPENAI_API_KEY!,
-            agentUserId: existingAgent.id,
-        });
+        const realtimeClient =
+            realtimeClients[meetingId] ??
+            (realtimeClients[meetingId] = await streamVideo.video.connectOpenAi({
+                call,
+                openAiApiKey: process.env.OPENAI_API_KEY!,
+                agentUserId: existingAgent.id,
+            }));
+        
 
         await realtimeClient.updateSession({
             instructions: existingAgent.instructions,
@@ -127,6 +129,8 @@ export async function POST(req: NextRequest) {
                     endedAt: new Date(),
                 })
                 .where(and(eq(meetings.id, meetingId), eq(meetings.status, "active")));
+            realtimeClients[meetingId]?.disconnect?.();
+            delete realtimeClients[meetingId];
         }   else if (eventType === "call.transcription_ready") {
             const event = payload as CallTranscriptionReadyEvent;
             const meetingId = event.call_cid.split(":")[1];
