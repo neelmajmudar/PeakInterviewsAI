@@ -12,10 +12,14 @@ export const CallUI = ({ meetingName}: Props) => {
     const call = useCall();
     const [show, setShow] = useState<"lobby" | "call" | "ended">("lobby");
 
+    console.debug("CallUI mounted", { meetingName });
+
     const handleJoin = async () => {
         if (!call) return;
 
+        console.debug("Joining call");
         await call.join();
+        console.debug("Call joined");
 
         setShow("call");
     };
@@ -23,10 +27,12 @@ export const CallUI = ({ meetingName}: Props) => {
     const handleLeave = () => {
         if (!call) return;
 
+        console.debug("Ending call");
         call.endCall();
         setShow("ended");
     };
 
+    console.debug("Rendering CallUI", { view: show });
     return (
         <StreamTheme className="h-full">
             {show === "lobby" && <CallLobby onJoin={handleJoin}/>}

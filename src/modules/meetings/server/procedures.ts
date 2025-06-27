@@ -13,6 +13,7 @@ import { GeneratedAvatar } from "@/components/generated-avatar";
 
 export const meetingsRouter = createTRPCRouter({
     generateToken: protectedProcedure.mutation(async ({ctx }) => {
+        console.debug("Generating token", { userId: ctx.auth.user.id });
         await streamVideo.upsertUsers([
             {
                 id: ctx.auth.user.id,
@@ -33,6 +34,8 @@ export const meetingsRouter = createTRPCRouter({
             exp: expirationTime,
             validity_in_seconds: issuedAt,
         });
+
+        console.debug("Token generated");
 
         return token;
     }),
@@ -79,6 +82,7 @@ export const meetingsRouter = createTRPCRouter({
     create: protectedProcedure
         .input(meetingsInsertSchema)
         .mutation(async ({ input, ctx}) => {
+            console.debug("Creating meeting", { input });
             const [createdMeeting] = await db
             .insert(meetings)
             .values({
@@ -112,6 +116,7 @@ export const meetingsRouter = createTRPCRouter({
             ]);
 
             const call = streamVideo.video.call("default", createdMeeting.id);
+            console.debug("Creating Stream call", { meetingId: createdMeeting.id });
             await call.create({
                 data: {
                     created_by_id: ctx.auth.user.id,
@@ -136,6 +141,7 @@ export const meetingsRouter = createTRPCRouter({
                     },
                 },
             });
+            console.debug("Meeting created", { meetingId: createdMeeting.id });
             return createdMeeting;
         }),
 
@@ -160,6 +166,7 @@ export const meetingsRouter = createTRPCRouter({
 
         return existingMeeting;
     }),
+
 
     getMany: protectedProcedure
     .input(z.object({

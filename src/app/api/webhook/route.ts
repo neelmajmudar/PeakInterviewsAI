@@ -20,6 +20,10 @@ function verifySignatureWithSDK(body: string, signature: string): boolean {
 
 export async function POST(req: NextRequest) {
     console.log("Webhook request received");
+    console.debug("Headers", {
+        signature: req.headers.get("x-signature"),
+        apiKey: req.headers.get("x-api-key"),
+    });
     const signature = req.headers.get("x-signature");
     const apiKey = req.headers.get("x-api-key");
 
@@ -44,10 +48,12 @@ export async function POST(req: NextRequest) {
     }
 
     const eventType = (payload as Record<string, unknown>)?.type;
+    console.debug("Webhook event", { eventType });
 
     if (eventType === "call.session_started") {
         const event = payload as CallSessionStartedEvent;
         const meetingId = event.call.custom?.meetingId;
+        console.debug("call.session_started", { meetingId });
 
         if (!meetingId) {
             return NextResponse.json({ error: "Missing meetingId" }, { status: 400 });
@@ -88,6 +94,7 @@ export async function POST(req: NextRequest) {
         }
 
         const call = streamVideo.video.call("default", meetingId);
+        console.debug("Connecting OpenAI agent", { agentId: existingAgent.id });
         const realtimeClient = await streamVideo.video.connectOpenAi({
             call,
             openAiApiKey: process.env.OPENAI_API_KEY!,
@@ -100,6 +107,7 @@ export async function POST(req: NextRequest) {
     } else if (eventType === "call.session_participant_left") {
         const event = payload as CallSessionParticipantLeftEvent;
         const meetingId = event.call_cid.split(":")[1];
+        console.debug("call.session_participant_left", { meetingId });
 
         if (!meetingId) {
             return NextResponse.json({ error: "Missing meetingId" }, { status: 400 });
@@ -110,6 +118,7 @@ export async function POST(req: NextRequest) {
     } else if (eventType === "call.session_ended") {
         const event = payload as CallEndedEvent;
         const meetingId = event.call.custom?.meetingId;
+        console.debug("call.session_ended", { meetingId });
 
         if (!meetingId) {
             return NextResponse.json({ error: "Missing meetingId" }, { status: 400 });
@@ -125,6 +134,7 @@ export async function POST(req: NextRequest) {
     } else if (eventType === "call.transcription_ready") {
         const event = payload as CallTranscriptionReadyEvent;
         const meetingId = event.call_cid.split(":")[1];
+        console.debug("call.transcription_ready", { meetingId });
 
         const [updatedMeeting] = await db
             .update(meetings)
@@ -148,6 +158,7 @@ export async function POST(req: NextRequest) {
     } else if (eventType === "call.recording_ready") {
         const event = payload as CallRecordingReadyEvent;
         const meetingId = event.call_cid.split(":")[1];
+        console.debug("call.recording_ready", { meetingId });
 
         await db
             .update(meetings)
