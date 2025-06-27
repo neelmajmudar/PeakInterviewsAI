@@ -39,7 +39,7 @@ const options = [
     value: MeetingStatus.Processing,
     children: (
         <div className="flex items-center gap-x-2 capitalize">
-            <LoaderIcon/>
+            <LoaderIcon className="animate-spin"/>
             {MeetingStatus.Processing}
         </div>
     )
