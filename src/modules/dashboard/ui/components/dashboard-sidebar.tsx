@@ -7,6 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { DashboardUserButton } from "@/modules/dashboard/ui/components/dashboard-user-button";
+import { DashboardTrial } from "./dashboard-trial";
+
 
 const firstSection = [
     {
@@ -105,6 +107,7 @@ export const DashboardSidebar = () => {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter className="p-4">
+                <DashboardTrial/>
                 <DashboardUserButton/>
                 <p className="text-xs text-white">© 2025 PeakInterviewer.AI</p>
             </SidebarFooter>
