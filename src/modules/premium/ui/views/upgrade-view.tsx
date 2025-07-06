@@ -47,6 +47,7 @@ export const UpgradeView = () => {
                         return (
                             <PricingCard
                                 key={product.id}
+                                className=""
                                 buttonText={buttonText}
                                 onClick={onClick}
                                 variant={

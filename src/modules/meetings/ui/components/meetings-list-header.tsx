@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { PlusIcon, XCircle, XCircleIcon } from "lucide-react"
+import { PlusIcon, XCircleIcon } from "lucide-react"
 import { NewMeetingDialog } from "./new-meeting-dialog"
 import React from "react"
 import { MeetingsSearchFilter } from "./meetings-search-filter"

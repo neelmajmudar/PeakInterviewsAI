@@ -5,7 +5,7 @@ import { GeneratedAvatar } from "@/components/generated-avatar";
 import { AvatarImage } from "@/components/ui/avatar"; // Assuming this is your custom component
 import { ChevronDownIcon, CreditCardIcon, LogOutIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import {Drawer, DrawerContent, DrawerTrigger, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerOverlay, DrawerClose, DrawerPortal } from "@/components/ui/drawer";
+import {Drawer, DrawerContent, DrawerTrigger, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 

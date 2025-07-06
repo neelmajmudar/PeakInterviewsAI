@@ -18,7 +18,6 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
-import { auth } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 
@@ -151,7 +150,7 @@ export const SignInView = () => {
                   </Button>
                 </div>
                 <div className="text-center text-sm">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <Link
                     href="/sign-up"
                     className="text-purple-500 hover:text-purple-600 underline underline-offset-4"

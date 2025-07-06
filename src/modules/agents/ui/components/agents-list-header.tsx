@@ -1,12 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { PlusIcon, XCircle, XCircleIcon } from "lucide-react"
+import { PlusIcon, XCircleIcon } from "lucide-react"
 import { NewAgentDialog } from "./new-agent-dialog"
 import { useState } from "react"
 import { useAgentsFilters } from "../../hooks/use-agents-filters"
 import { AgentsSearchFilter } from "./agents-search-filter"
-import { set } from "date-fns"
 import { DEFAULT_PAGE } from "@/constants"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 

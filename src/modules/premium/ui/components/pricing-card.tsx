@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { StringValidation } from "zod";
 
 const pricingCardVariants = cva("rounded-lg p-4 py-6 w-full", {
     variants: {
@@ -60,7 +59,7 @@ interface Props extends VariantProps<typeof pricingCardVariants> {
     title: string;
     description?: string | null;
     priceSuffix: string;
-    className?: string;
+    className: string;
     buttonText: string;
     onClick: () => void;
 };
@@ -78,7 +77,7 @@ export const PricingCard = ({
     onClick,
 }: Props) => {
     return (
-        <div className={cn(pricingCardVariants({ variant }), className="border")}>
+        <div className={cn(pricingCardVariants({ variant }), "border", className)}>
             <div className="flex items-end gap-x-4 justify-between">
                 <div className="flex flex-col gap-y-2">
                     <div className="flex items-center gap-x-2">

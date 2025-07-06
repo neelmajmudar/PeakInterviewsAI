@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {AgentGetOne} from "../../types";
 import { useTRPC } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -17,7 +16,7 @@ import { toast } from "sonner";
 interface AgentFormProps {
     onSuccess?: () => void;
     onCancel?: () => void;
-    initialValues?: any;
+    initialValues?: (z.infer<typeof agentsInsertSchema> & { id?: string });
 };
 
 export const AgentForm = ({
@@ -85,7 +84,7 @@ export const AgentForm = ({
         if (isEdit) {
             updateAgent.mutate({
                 ...values,
-                id: initialValues.id,
+                id: initialValues.id!,
             });
         } else{
             createAgent.mutate(values);

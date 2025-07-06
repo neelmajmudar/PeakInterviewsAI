@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CallControls, SpeakerLayout } from "@stream-io/video-react-sdk";
-import { Speaker } from "lucide-react";
 
 
 interface Props {

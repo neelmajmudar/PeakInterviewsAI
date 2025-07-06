@@ -2,7 +2,6 @@
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription} from "@/components/ui/dialog";
 import {Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription} from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { desc } from "drizzle-orm";
 
 interface ResponsiveDialogProps{
     title: string;
