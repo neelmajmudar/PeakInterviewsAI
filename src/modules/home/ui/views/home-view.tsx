@@ -1,11 +1,7 @@
 "use client";
-
+import { redirect } from "next/navigation";
 
 export const HomeView = () => {
- 
-  return (
-      <div>
-        Home view
-      </div>
-  )
+  redirect("/meetings");
+  return null;
 }

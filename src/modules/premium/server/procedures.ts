@@ -1,4 +1,4 @@
-import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { agents, meetings } from "@/db/schema";
 import { polarClient } from "@/lib/polar";
 import { eq, count } from "drizzle-orm";

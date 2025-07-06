@@ -1,6 +1,5 @@
 import { auth } from '@/lib/auth';
 import { initTRPC, TRPCError } from '@trpc/server';
-import { integer } from 'drizzle-orm/gel-core';
 import { headers } from 'next/headers';
 import { cache } from 'react';
 import { polarClient } from '@/lib/polar';

@@ -1,7 +1,6 @@
 import { db } from "@/db";
 import { agents, meetings, user } from "@/db/schema";
 import { inngest } from "@/inngest/client";
-import { AgentsSearchFilter } from "@/modules/agents/ui/components/agents-search-filter";
 import { StreamTranscriptItem } from "@/modules/meetings/types";
 import { eq, inArray } from "drizzle-orm";
 import JSONL from "jsonl-parse-stringify";

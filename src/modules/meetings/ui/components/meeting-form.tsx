@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {MeetingGetOne} from "../../types";
 import { useTRPC } from "@/trpc/client";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -20,7 +19,7 @@ import { NewAgentDialog } from "@/modules/agents/ui/components/new-agent-dialog"
 interface MeetingFormProps {
     onSuccess?: (id?: string) => void;
     onCancel?: () => void;
-    initialValues?: any;
+    initialValues?: (z.infer<typeof meetingsInsertSchema> & { id?: string });
 };
 
 export const MeetingForm = ({
@@ -97,7 +96,7 @@ export const MeetingForm = ({
         if (isEdit) {
             updateMeeting.mutate({
                 ...values,
-                id: initialValues.id,
+                id: initialValues.id!,
             });
         } else{
             createMeeting.mutate(values);
@@ -151,7 +150,7 @@ export const MeetingForm = ({
                         />
                     </FormControl>
                     <FormDescription>
-                        Not found what you're looking for?{" "}
+                        Not found what you&apos;re looking for?{" "}
                         <button
                         type="button"
                         className="text-primary hover:underline"

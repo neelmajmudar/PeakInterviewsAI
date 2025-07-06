@@ -9,8 +9,6 @@ import { meetingsInsertSchema, meetingsUpdateSchema } from "../schemas";
 import { MeetingStatus, StreamTranscriptItem } from "../types";
 import { streamVideo } from "@/lib/stream-video";
 import { generateAvatarUri } from "@/lib/avatar";
-import { GeneratedAvatar } from "@/components/generated-avatar";
-import { createGzip } from "zlib";
 import JSONL from "jsonl-parse-stringify";
 import { streamChat } from "@/lib/stream-chat";
 

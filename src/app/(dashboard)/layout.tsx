@@ -1,6 +1,5 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/modules/dashboard/ui/components/dashboard-sidebar";
-import { Sidebar } from "lucide-react";
 import { DashboardNavbar } from "@/modules/dashboard/ui/components/dashboard-navbar";
 
 interface Props {

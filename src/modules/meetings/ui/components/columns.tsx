@@ -3,16 +3,11 @@
 import {format} from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
 import { GeneratedAvatar } from "@/components/generated-avatar";
-import { CornerDownRightIcon, VideoIcon } from "lucide-react";
+import { CornerDownRightIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MeetingGetMany } from "../../types";
 import { CircleCheckIcon, CircleXIcon, ClockArrowUpIcon, ClockFadingIcon, LoaderIcon } from "lucide-react";
 import {cn, formatDuration} from "@/lib/utils";
-
-
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 
 const statusIconMap = {
   upcoming: ClockArrowUpIcon,
