@@ -15,13 +15,15 @@ interface Props {
     agentName: string;
     onEdit: () => void;
     onRemove: () => void;
+    isDefault?: boolean;
 }
 
 export const AgentIdViewHeader = ({
     agentId,
     agentName,
     onEdit,
-    onRemove
+    onRemove,
+    isDefault,
 }:  Props) => {
     return (
         <div className="flex items-center justify-between">
@@ -46,23 +48,25 @@ export const AgentIdViewHeader = ({
                 </BreadcrumbItem>
             </BreadcrumbList>
             </Breadcrumb>
-            <DropdownMenu modal={false}>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost">
-                       <MoreVerticalIcon/> 
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align='end'>
-                    <DropdownMenuItem onClick={onEdit}>
-                        <PencilIcon className="text-black size-4" />
-                        Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={onRemove}>
-                        <TrashIcon className="text-red-500 size-4" />
-                        Delete
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+            {!isDefault && (
+                <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost">
+                           <MoreVerticalIcon/>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align='end'>
+                        <DropdownMenuItem onClick={onEdit}>
+                            <PencilIcon className="text-black size-4" />
+                            Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={onRemove}>
+                            <TrashIcon className="text-red-500 size-4" />
+                            Delete
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )}
         </div>
     );
 };

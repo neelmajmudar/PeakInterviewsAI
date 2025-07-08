@@ -11,16 +11,29 @@ export const agentsRouter = createTRPCRouter({
     update: protectedProcedure
     .input(agentsUpdateSchema)
     .mutation(async ({ input, ctx }) => {
+        const [existing] = await db
+            .select({ isDefault: agents.isDefault })
+            .from(agents)
+            .where(
+                and(
+                    eq(agents.id, input.id),
+                    eq(agents.userId, ctx.auth.user.id),
+                ),
+            );
+
+        if (!existing) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" });
+        }
+
+        if (existing.isDefault) {
+            throw new TRPCError({ code: "FORBIDDEN", message: "Default agents cannot be edited" });
+        }
+
         const [updatedAgent] = await db
-        .update(agents)
-        .set(input)
-        .where(
-            and(
-                eq(agents.id, input.id),
-                eq(agents.userId, ctx.auth.user.id),
-            ),
-        )
-        .returning();
+            .update(agents)
+            .set(input)
+            .where(and(eq(agents.id, input.id), eq(agents.userId, ctx.auth.user.id)))
+            .returning();
 
         if (!updatedAgent) {
             throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" });
@@ -30,15 +43,28 @@ export const agentsRouter = createTRPCRouter({
     }),
 
     remove: protectedProcedure.input(z.object({id: z.string()})).mutation(async ({input, ctx}) => {
+        const [existing] = await db
+            .select({ isDefault: agents.isDefault })
+            .from(agents)
+            .where(
+                and(
+                    eq(agents.id, input.id),
+                    eq(agents.userId, ctx.auth.user.id),
+                ),
+            );
+
+        if (!existing) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" });
+        }
+
+        if (existing.isDefault) {
+            throw new TRPCError({ code: "FORBIDDEN", message: "Default agents cannot be removed" });
+        }
+
         const [removedAgent] = await db
-        .delete(agents)
-        .where(
-            and(
-                eq(agents.id, input.id),
-                eq(agents.userId, ctx.auth.user.id),
-            ),
-        )
-        .returning();
+            .delete(agents)
+            .where(and(eq(agents.id, input.id), eq(agents.userId, ctx.auth.user.id)))
+            .returning();
 
         if (!removedAgent) {
             throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" });
@@ -124,6 +150,7 @@ export const agentsRouter = createTRPCRouter({
         .insert(agents)
         .values({
             ...input,
+            isDefault: false,
             userId: ctx.auth.user.id,
         })
         .returning();

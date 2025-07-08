@@ -1,7 +1,7 @@
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { agents, meetings } from "@/db/schema";
 import { polarClient } from "@/lib/polar";
-import { eq, count } from "drizzle-orm";
+import { eq, count, and } from "drizzle-orm";
 import { db } from "@/db";
 
 export const premiumRouter = createTRPCRouter({
@@ -49,12 +49,17 @@ export const premiumRouter = createTRPCRouter({
             .from(meetings)
             .where(eq(meetings.userId, ctx.auth.user.id));
 
-        const [userAgents] = await db 
+        const [userAgents] = await db
             .select({
                 count: count(agents.id),
             })
             .from(agents)
-            .where(eq(agents.userId, ctx.auth.user.id));
+            .where(
+                and(
+                    eq(agents.userId, ctx.auth.user.id),
+                    eq(agents.isDefault, false),
+                )
+            );
 
         return {
             meetingCount: userMeetings.count,
