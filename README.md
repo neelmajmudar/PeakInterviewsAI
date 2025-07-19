@@ -2,7 +2,7 @@
 
 **Realtime mock‑interview rooms with AI agents you design in seconds**
 
-Live Demo → https://peakinterviewsai.vercel.app
+Try it out! → https://peakinterviewsai.vercel.app
 
 ---
 
@@ -97,6 +97,13 @@ flowchart LR
 - Panel interviews (multi‑agent rooms).  
 - Skill‑progress dashboards & scoring rubrics.  
 - Mobile PWA with offline practice mode.  
+
+## What it Looks Like
+![image.png](attachment:f10e965e-e7b0-4cc4-9aa6-8a1fac4b95ca:image.png)
+
+## -------------------------------------------------------------------------------------
+
+![image.png](attachment:b84dd88c-0a0d-447a-99d0-092bb6c74bc4:image.png)
 
 ## License
 MIT © 2025 Neel Majmudar
