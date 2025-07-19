@@ -99,7 +99,8 @@ flowchart LR
 - Mobile PWA with offline practice mode.  
 
 ## What it Looks Like
-<img width="2239" height="1198" alt="image (1)" src="https://github.com/user-attachments/assets/cfee1344-3122-403e-bcf7-8d26d7300aea" />
+
+<img width="2239" height="1196" alt="image (3)" src="https://github.com/user-attachments/assets/6a2122ce-cc19-45b5-8145-fe8032388eae" />
 
 <img width="2239" height="1198" alt="image (2)" src="https://github.com/user-attachments/assets/447d04ff-9385-42d4-9650-cbbf1bb2e78b" />
 
