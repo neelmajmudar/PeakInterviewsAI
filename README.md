@@ -88,7 +88,7 @@ flowchart LR
 ## What I Learned
 - Delivering a **minimal‑prompt agent UX** that users grok immediately.  
 - Engineering **< 100 ms voice latency** with WebRTC + OpenAI streaming endpoints.  
-- Crafting **idempotent, event‑driven pipelines** in Inngest for media post‑processing.  
+- Crafting **event‑driven pipelines** in Inngest for media post‑processing.  
 - Enforcing **row‑level security** and multi‑tenant schemas in Neon Postgres.  
 - Integrating **usage‑metered billing** and handling webhook race conditions.  
 
