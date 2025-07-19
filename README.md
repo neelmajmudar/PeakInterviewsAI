@@ -2,7 +2,7 @@
 
 **Realtime mock‑interview rooms with AI agents you design in seconds**
 
-Live Site for testing → https://peakinterviewsai.vercel.app
+Live Demo → https://peakinterviewsai.vercel.app
 
 ---
 
@@ -37,30 +37,30 @@ flowchart TD
 ```mermaid
 flowchart LR
     subgraph Client
-        A1[Browser\nNext.js / React]
+        A1["Browser\nNext.js / React"]
     end
     subgraph Edge
-        B1[Vercel Edge Function\n(tRPC API)]
-        B2[NextAuth]
+        B1["Vercel Edge Function\n tRPC API"]
+        B2["NextAuth"]
     end
     subgraph Cloud
-        C1[Stream Video API]
-        D1[Stream SFU]
-        C2[OpenAI GPT‑4o Voice]
-        E1[Neon/Postgres]
-        F1[Inngest Event Pipeline]
-        G1[Polar Payments]
+        C1["Stream Video API"]
+        D1["Stream SFU"]
+        C2["OpenAI GPT-4o Voice"]
+        E1["Neon / Postgres"]
+        F1["Inngest Pipeline"]
+        G1["Polar Payments"]
     end
 
-    A1 -->|HTTP / WebSocket| B1
+    A1 -->|HTTP/WebSocket| B1
     A1 --> B2
     B1 -->|REST| C1
     A1 -- WebRTC --> D1
     D1 -->|Recording| C1
     B1 -->|Voice Stream| C2
     B1 -->|SQL| E1
-    B1 -->|Event (meeting.ended)| F1
-    F1 -->|Transcribe + Summarise| C2
+    B1 -->|Event: meeting.ended| F1
+    F1 -->|Transcribe & Summarise| C2
     F1 -->|Persist| E1
     B1 -->|Billing Webhook| G1
 ```
