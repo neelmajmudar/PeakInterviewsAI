@@ -73,7 +73,7 @@ flowchart LR
 - **Secure Storage** – Drizzle ORM + Neon/Postgres for agents, meetings & user auth.  
 - **Usage‑Based Billing** – Polar Payments caps free‑tier minutes and handles upgrades.  
 
-## Tech Stack (High Level)
+## Tech Stack
 
 | Layer         | Technology                                                |
 | ------------- | --------------------------------------------------------- |
